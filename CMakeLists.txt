@@ -20,7 +20,7 @@ link_libraries(${OpenCV_LIBS} )
 
 if(CUDA_FOUND)
   set(CUDA_NVCC_FLAGS "
-  -ccbin /usr/bin/clang; 
+  -ccbin /usr/bin/gcc; 
   -gencode;arch=compute_30,code=sm_30;  
   -gencode;arch=compute_35,code=sm_35;
   -gencode;arch=compute_35,code=compute_35;")
