@@ -5,15 +5,18 @@
 
 #include "utils.hpp"
 #include "playground.hpp"
+#include "histogram_naive.hpp"
 
 
 void test_saxpy();
 void test_scan();
+void test_histogram();
 
 int main(int argc, char **argv)
 {
 //     test_saxpy();
-    test_scan();
+//     test_scan();
+    test_histogram();
     return 0;
 }
 
@@ -91,7 +94,44 @@ void test_scan()
         {
             std::cerr << "Error at index " << nn << ": got y = " << y[nn] << ", expected " << total << ".\n";
         }
+    }   
+}
+
+void test_histogram()
+{
+    int numElems = 10000;
+    
+    int numBins = 10;
+    float firstEdge = 0.0;
+    float lastEdge = 10.0;
+    
+    std::vector<float> x(numElems);
+    std::vector<int> histogramValues(numBins);
+    
+    for (int nn = 0; nn < numElems; nn++)
+    {
+        x[nn] = nn/3.0 + 0.5;
     }
     
+    int gridSize = 10;
+    int blockSize = 100;
+    histogram_thread_bin(x.size(), x.data(), numBins, firstEdge, lastEdge, histogramValues.data(), gridSize, blockSize);
     
+    cudaDeviceSynchronize(); checkCudaErrors(cudaGetLastError());
+    
+    std::cout << "x\n";
+    for (int nn = 0; nn < 10; nn++)
+    {
+        std::cout << x[nn] <<  "\n";
+    }
+    
+    float binSize = (lastEdge-firstEdge)/numBins;
+    std::cout << "histogram\n";
+    for (int nn = 0; nn < numBins; nn++)
+    {
+        float binLeft = firstEdge + nn*binSize;
+        float binRight = binLeft + binSize;
+        
+        std::cout << binLeft << " to " << binRight << ": " << histogramValues.at(nn) << " values\n";
+    } 
 }

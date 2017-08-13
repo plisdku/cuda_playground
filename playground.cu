@@ -76,8 +76,3 @@ void prefix_sum(int arrayLength, const float* x, float* out, int gridSize, int b
     checkCudaErrors(cudaFree(d_out));
 }
 
-
-
-
-
-void 

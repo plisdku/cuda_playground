@@ -1,3 +1,7 @@
+#ifndef _UTILS_HPP_
+#define _UTILS_HPP_
+
+
 #include <iostream>
 #include <cuda.h>
 #include <cuda_runtime.h>
@@ -13,3 +17,7 @@ void check(T err, const char* const func, const char* const file, const int line
     exit(1);
   }
 }
+
+
+
+#endif

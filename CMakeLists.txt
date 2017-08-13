@@ -35,7 +35,14 @@ if(CUDA_FOUND)
 
   # --------- Code-related things
 
-  CUDA_ADD_EXECUTABLE(myPlayground main.cpp utils.hpp playground.cu)
+  CUDA_ADD_EXECUTABLE(myPlayground
+    main.cpp
+    utils.hpp
+    playground.hpp
+    playground.cu
+    histogram_naive.hpp
+    histogram_naive.cu
+    )
 
 
 
